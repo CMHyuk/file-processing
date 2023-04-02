@@ -8,5 +8,6 @@ public class LectureController {
         Scanner sc = new Scanner(System.in);
         LectureService lectureService = new LectureService();
         lectureService.run(sc);
+        lectureService.printTotalData();
     }
 }
