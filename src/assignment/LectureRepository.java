@@ -1,5 +1,7 @@
 package assignment;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.TreeMap;
@@ -53,15 +55,26 @@ public class LectureRepository {
         }
     }
 
-    public void sortAndPrint() {
+    public void sortAndPrintTotalData(FileWriter writer) throws IOException {
         for (Map.Entry<String, Lecture> entry : repository.entrySet()) {
-            System.out.println(getLecture(entry));
+            writer.write(getTotalData(entry) + "\n");
         }
     }
 
-    private String getLecture(Map.Entry<String, Lecture> entry) {
+    private String getTotalData(Map.Entry<String, Lecture> entry) {
         return entry.getValue().getId() + " " + entry.getValue().getLectureName() +
                 " " + entry.getValue().getLectureRoom() + " " + entry.getValue().getLectureType() +
+                " " + entry.getValue().getLectureDivision();
+    }
+
+    public void sortAndPrintInterimData(FileWriter writer) throws IOException {
+        for (Map.Entry<String, Lecture> entry : repository.entrySet()) {
+            writer.write(getInterimData(entry) + "\n");
+        }
+    }
+
+    private String getInterimData(Map.Entry<String, Lecture> entry) {
+        return entry.getValue().getId() + " " + entry.getValue().getLectureName() +
                 " " + entry.getValue().getLectureDivision();
     }
 }

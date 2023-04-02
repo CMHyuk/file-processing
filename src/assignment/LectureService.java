@@ -1,25 +1,31 @@
 package assignment;
 
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class LectureService {
 
     LectureRepository repository = new LectureRepository();
 
-    public void run(Scanner sc) {
-        int totalRecord = sc.nextInt();
+    public void run(FileReader fileReader, FileWriter writer, String path) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(path));
+
+        int totalRecord = Integer.parseInt(br.readLine());
         int share = totalRecord / 2;
 
         try {
             for (int i = 0; i < totalRecord; i++) {
                 Lecture lecture = new Lecture();
-                String[] input = sc.next().split(",");
+                String[] input = br.readLine().split(",");
                 processFile(i, lecture, input);
                 //중간 결과 출력
                 if (i == share) {
-                    printInterimResult();
+                    printInterimResult(writer);
                 }
             }
+            fileReader.close();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -39,13 +45,13 @@ public class LectureService {
         }
     }
 
-    public void printInterimResult() {
-        repository.sortAndPrint();
-        System.out.println("---------------");
+    public void printInterimResult(FileWriter writer) throws IOException {
+        repository.sortAndPrintInterimData(writer);
+        writer.write("---------------" + "\n" + "\n");
     }
 
-    public void printTotalData() {
-        repository.sortAndPrint();
+    public void printTotalData(FileWriter writer) throws IOException {
+        repository.sortAndPrintTotalData(writer);
     }
 
     private void setLecture(Lecture lecture, String[] input) {
