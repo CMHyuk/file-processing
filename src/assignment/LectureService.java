@@ -5,11 +5,21 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import static assignment.Const.path;
+
 public class LectureService {
 
-    LectureRepository repository = new LectureRepository();
+    private final LectureRepository repository;
+    private final FileWriter fileWriter;
+    private final FileReader fileReader;
 
-    public void run(FileReader fileReader, FileWriter writer, String path) throws IOException {
+    public LectureService(LectureRepository repository, FileWriter fileWriter, FileReader fileReader) {
+        this.repository = repository;
+        this.fileWriter = fileWriter;
+        this.fileReader = fileReader;
+    }
+
+    public void run() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(path));
 
         int totalRecord = Integer.parseInt(br.readLine());
@@ -22,10 +32,12 @@ public class LectureService {
                 processFile(i, lecture, input);
                 //중간 결과 출력
                 if (i == share) {
-                    printInterimResult(writer);
+                    printInterimResult();
                 }
             }
+            printTotalData();
             fileReader.close();
+            fileWriter.close();
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
         }
@@ -45,13 +57,13 @@ public class LectureService {
         }
     }
 
-    public void printInterimResult(FileWriter writer) throws IOException {
-        repository.sortAndPrintInterimData(writer);
-        writer.write("---------------" + "\n" + "\n");
+    private void printInterimResult() throws IOException {
+        repository.sortAndPrintInterimData(fileWriter);
+        fileWriter.write("---------------" + "\n" + "\n");
     }
 
-    public void printTotalData(FileWriter writer) throws IOException {
-        repository.sortAndPrintTotalData(writer);
+    private void printTotalData() throws IOException {
+        repository.sortAndPrintTotalData(fileWriter);
     }
 
     private void setLecture(Lecture lecture, String[] input) {

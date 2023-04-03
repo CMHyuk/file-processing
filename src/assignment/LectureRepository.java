@@ -9,7 +9,7 @@ import java.util.TreeMap;
 public class LectureRepository {
 
     //정렬을 위해 TreeMap 사용
-    private static Map<String, Lecture> repository = new TreeMap<>();
+    private static final Map<String, Lecture> repository = new TreeMap<>();
 
     public void save(Lecture lecture, int transaction) {
         try {
@@ -61,7 +61,7 @@ public class LectureRepository {
         }
     }
 
-    private String getTotalData(Map.Entry<String, Lecture> entry) {
+    public String getTotalData(Map.Entry<String, Lecture> entry) {
         return entry.getValue().getId() + " " + entry.getValue().getLectureName() +
                 " " + entry.getValue().getLectureRoom() + " " + entry.getValue().getLectureType() +
                 " " + entry.getValue().getLectureDivision();
