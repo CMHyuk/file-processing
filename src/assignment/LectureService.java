@@ -20,8 +20,11 @@ public class LectureService {
     }
 
     public void run() throws IOException {
+        //파일 입력을 위한 코드
         BufferedReader br = new BufferedReader(new FileReader(path));
+        //트랜잭션 레코드의 총 개수
         int totalRecord = Integer.parseInt(br.readLine());
+        //입력 n에 2를 나눈 값
         int share = totalRecord / 2;
 
         try {
@@ -29,7 +32,7 @@ public class LectureService {
                 Lecture lecture = new Lecture();
                 String[] input = br.readLine().split(",");
                 processFile(i, lecture, input);
-                //중간 결과 출력
+                //입력 n에 2를 나눈 값의 몫에 해당하는 값 번째의 트랜잭션의 실행한 뒤 중간 결과 출력
                 if (i == share) {
                     printInterimResult();
                 }
@@ -38,10 +41,12 @@ public class LectureService {
             fileReader.close();
             fileWriter.close();
         } catch (IllegalArgumentException e) {
+            //예외 발생 시 에러 메시지 콘솔에 출력
             System.out.println(e.getMessage());
         }
     }
 
+    //파일 처리 모드 구분해 적절한 메서드 호출
     private void processFile(int i, Lecture lecture, String[] input) {
         if (input[0].equals("I")) {
             lecture.setLecture(input);
@@ -56,11 +61,13 @@ public class LectureService {
         }
     }
 
+    //중간 결과
     private void printInterimResult() throws IOException {
         repository.sortAndPrintInterimData(fileWriter);
         fileWriter.write("---------------" + "\n" + "\n");
     }
 
+    //최종 결과
     private void printTotalData() throws IOException {
         repository.sortAndPrintTotalData(fileWriter);
     }
