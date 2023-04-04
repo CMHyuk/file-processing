@@ -21,7 +21,6 @@ public class LectureService {
 
     public void run() throws IOException {
         BufferedReader br = new BufferedReader(new FileReader(path));
-
         int totalRecord = Integer.parseInt(br.readLine());
         int share = totalRecord / 2;
 
@@ -45,11 +44,11 @@ public class LectureService {
 
     private void processFile(int i, Lecture lecture, String[] input) {
         if (input[0].equals("I")) {
-            setLecture(lecture, input);
+            lecture.setLecture(input);
             repository.save(lecture, i + 1);
         }
         if (input[0].equals("C")) {
-            setLecture(lecture, input);
+            lecture.setLecture(input);
             repository.change(i + 1, input[1], lecture);
         }
         if (input[0].equals("D")) {
@@ -64,13 +63,5 @@ public class LectureService {
 
     private void printTotalData() throws IOException {
         repository.sortAndPrintTotalData(fileWriter);
-    }
-
-    private void setLecture(Lecture lecture, String[] input) {
-        lecture.setId(input[1]);
-        lecture.setLectureName(input[2]);
-        lecture.setLectureRoom(input[3]);
-        lecture.setLectureType(input[4]);
-        lecture.setLectureDivision(input[5]);
     }
 }

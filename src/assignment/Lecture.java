@@ -47,4 +47,12 @@ public class Lecture {
     public void setLectureDivision(String lectureDivision) {
         this.lectureDivision = lectureDivision;
     }
+
+    public void setLecture(String[] input) {
+        this.setId(input[1]);
+        this.setLectureName(input[2]);
+        this.setLectureRoom(input[3]);
+        this.setLectureType(input[4]);
+        this.setLectureDivision(input[5]);
+    }
 }
