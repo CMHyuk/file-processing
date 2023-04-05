@@ -48,16 +48,21 @@ public class LectureService {
 
     //파일 처리 모드 구분해 적절한 메서드 호출
     private void processFile(int i, Lecture lecture, String[] input) {
-        if (input[0].equals("I")) {
-            lecture.setLecture(input);
-            repository.save(lecture, i + 1);
-        }
-        if (input[0].equals("C")) {
-            lecture.setLecture(input);
-            repository.change(i + 1, input[1], lecture);
-        }
-        if (input[0].equals("D")) {
-            repository.delete(i + 1, input[1]);
+        try {
+            if (input[0].equals("I")) {
+                lecture.setLecture(input);
+                repository.save(lecture, i + 1);
+            }
+            if (input[0].equals("C")) {
+                lecture.setLecture(input);
+                repository.change(i + 1, input[1], lecture);
+            }
+            if (input[0].equals("D")) {
+                repository.delete(i + 1, input[1]);
+            }
+        } catch (IllegalArgumentException e) {
+            //예외 발생 시 에러 메시지 콘솔에 출력
+            System.out.println(e.getMessage());
         }
     }
 

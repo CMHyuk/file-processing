@@ -13,12 +13,8 @@ public class LectureRepository {
 
     //저장
     public void save(Lecture lecture, int transaction) {
-        try {
-            isExistLecture(lecture, transaction);
-            repository.put(lecture.getId(), lecture);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
+        isExistLecture(lecture, transaction);
+        repository.put(lecture.getId(), lecture);
     }
 
     private void isExistLecture(Lecture lecture, int transaction) {
@@ -40,30 +36,22 @@ public class LectureRepository {
 
     //수정
     public void change(int transaction, String id, Lecture lecture) {
-        try {
-            Lecture findLecture = repository.get(id);
-            //예외 3. 수정 시 해당 트랜잭션이 가리키는 강의 번호가 존재하지 않는 경우
-            if (findLecture == null) {
-                throw new IllegalArgumentException(transaction + "번째 트랜잭션(수정) 실행 실패[강의 번호가 존재하지 않습니다.]");
-            }
-            repository.replace(lecture.getId(), lecture);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        Lecture findLecture = repository.get(id);
+        //예외 3. 수정 시 해당 트랜잭션이 가리키는 강의 번호가 존재하지 않는 경우
+        if (findLecture == null) {
+            throw new IllegalArgumentException(transaction + "번째 트랜잭션(수정) 실행 실패[강의 번호가 존재하지 않습니다.]");
         }
+        repository.replace(lecture.getId(), lecture);
     }
 
     //삭제
     public void delete(int transaction, String id) {
-        try {
-            Lecture findLecture = repository.get(id);
-            //예외 4. 삭제 시 해당 트랜잭션이 가리키는 강의 번호가 존재하지 않는 경우
-            if (findLecture == null) {
-                throw new IllegalArgumentException(transaction + "번째 트랜잭션(삭제) 실행 실패[강의 번호가 존재하지 않습니다.]");
-            }
-            repository.remove(id);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        Lecture findLecture = repository.get(id);
+        //예외 4. 삭제 시 해당 트랜잭션이 가리키는 강의 번호가 존재하지 않는 경우
+        if (findLecture == null) {
+            throw new IllegalArgumentException(transaction + "번째 트랜잭션(삭제) 실행 실패[강의 번호가 존재하지 않습니다.]");
         }
+        repository.remove(id);
     }
 
     //getTotalData에서 반환된 데이터 오름차순으로 정렬 후 파일에 저장

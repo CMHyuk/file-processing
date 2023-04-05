@@ -1,5 +1,9 @@
 package assignment;
 
+/**
+ * 강의실 관련 정보 클래스
+ * 순서대로 강의 번호, 이름, 강의실, 유형, 분반
+ */
 public class Lecture {
 
     private String id;
